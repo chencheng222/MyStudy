@@ -1,5 +1,7 @@
 package com.cc.study.net.udp;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -37,6 +39,22 @@ public class MyServer {
         // 释放资源
         server.close();
 
+    }
+
+    /**
+     * 将字节数组读取转为double
+     * 将缓冲区内容写入内存中时，使用输入流
+     *
+     * @param data
+     * @return
+     * @throws IOException
+     */
+    public static double conver(byte[] data) throws IOException {
+        DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
+        double num = dis.readDouble();
+        dis.close();
+
+        return num;
     }
 
 }

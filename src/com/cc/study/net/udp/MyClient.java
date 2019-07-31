@@ -1,5 +1,7 @@
 package com.cc.study.net.udp;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -33,5 +35,31 @@ public class MyClient {
 
         // 释放
         client.close();
+    }
+
+    /**
+     * 将double型->字节数组
+     * 以内存中的数据为基准，将数组写入到缓冲区时使用输出流
+     *
+     * @param num
+     * @return
+     */
+    public static byte[] convert(double num) throws IOException {
+        byte[] data = null;
+
+        // 该类实现了将数据写入字节数组的输出流。 当数据写入缓冲区时，
+        // 缓冲区会自动增长。 数据可以使用toByteArray()和toString() 。
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        // 该类将原始Java数据类型写入输出流
+        DataOutputStream dos = new DataOutputStream(bos);
+
+        dos.writeDouble(num);
+        dos.flush();
+
+        // 获取数据
+        data = bos.toByteArray();
+        dos.close();
+
+        return data;
     }
 }
