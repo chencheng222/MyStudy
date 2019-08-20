@@ -30,6 +30,9 @@ public class XmlTest {
         parse.parse(Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("com/cc/study/servlet/web.xml")
                 ,handler);
+
+        System.out.println(handler.getEntities().size());
+        System.out.println(handler.getMappings().size());
     }
 }
 
@@ -72,11 +75,13 @@ class WebHandle extends DefaultHandler {
     public void characters(char[] ch, int start, int length) throws SAXException {
         String contents = new String(ch,start,length).trim();
 
-        if (StringUtils.isEmpty(tag)) {
+        System.out.println(contents);
+
+        if (StringUtils.isEmpty(tag) || StringUtils.isEmpty(contents)) {
             return;
         }
 
-        if (isMapping) {
+        if (!isMapping) {
             if ("servlet-name".equals(tag)) {
                 entity.setName(contents);
             } else if ("servlet-class".equals(tag)) {
@@ -98,16 +103,23 @@ class WebHandle extends DefaultHandler {
             return;
         }
 
-        if ("servlet".equals(tag)) {
+        if ("servlet".equals(qName)) {
             entities.add(entity);
-        } else if ("servlet-mapping".equals(tag)) {
+        } else if ("servlet-mapping".equals(qName)) {
             mappings.add(mapping);
         }
 
-        tag = null;
     }
     @Override
     public void endDocument() throws SAXException {
         System.out.println("----解析文档结束----");
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+    public List<Mapping> getMappings() {
+        return mappings;
     }
 }
