@@ -25,12 +25,27 @@ public class QuickSort {
 
     }
 
+    /**
+     * 快速排序
+     *
+     * @param arry 排序数组
+     */
     public static void quickSort(int[] arry) {
+        // 默认起始位置为低位索引
         int low = 0;
+        // 默认最后位置为高位索引
         int high = arry.length - 1;
+
         quickSort(arry, low, high);
     }
 
+    /**
+     * 快速排序(分区+递归)
+     *
+     * @param arry 数组
+     * @param low 低位索引
+     * @param high 高位索引
+     */
     private static void quickSort(int[] arry, int low, int high) {
         if (low >= high) {
             return;
@@ -46,6 +61,14 @@ public class QuickSort {
 
     }
 
+    /**
+     * 分区操作
+     *
+     * @param arry 数组
+     * @param low 低位索引
+     * @param high 高位索引
+     * @return 基准值索引
+     */
     private static int partition(int[] arry, int low, int high) {
         // 指定左指针和右指针
         int i = low;
